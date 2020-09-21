@@ -22,4 +22,12 @@ node {
         junit '**/target/surefire-reports/TEST-*.xml'
         archiveArtifacts 'complete/target/*.jar'
     }
+        stage('Build Dockerimage') {
+        junit '**/target/surefire-reports/TEST-*.xml'
+        archiveArtifacts 'complete/target/*.jar'
+    }
+    //    stage('Results') {
+    //    junit '**/target/surefire-reports/TEST-*.xml'
+    //    archiveArtifacts 'complete/target/*.jar'
+    //}
 }
