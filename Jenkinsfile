@@ -8,7 +8,7 @@ node {
         // **       in the global configuration.
         mvnHome = tool 'M3'
     }
-    stage('Build') {
+/*    stage('Build') {
         // Run the maven build
         withEnv(["MVN_HOME=$mvnHome"]) {
         //    if (isUnix()) {
@@ -28,12 +28,12 @@ node {
     //    archiveArtifacts 'complete/target/*.jar'
     //}
 }
-
+*/
 node {
     /* Requires the Docker Pipeline plugin to be installed */
     docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
-        stage('Build') {
-            sh 'cd complete; mvn -B clean package'
+        stage('Build docker') {
+            sh 'echo $HOME; cd complete; mvn -B clean package'
         }
     }
 }
