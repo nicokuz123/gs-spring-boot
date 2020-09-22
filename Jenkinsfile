@@ -19,7 +19,6 @@ node {
         }
        //  }
     }
- 
     //    stage('Results') {
     //    junit '**/target/surefire-reports/TEST-*.xml'
     //    archiveArtifacts 'complete/target/*.jar'
