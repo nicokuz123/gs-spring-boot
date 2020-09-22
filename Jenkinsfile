@@ -23,8 +23,7 @@ node {
         archiveArtifacts 'complete/target/*.jar'
     }
         stage('Build Dockerimage') {
-        junit '**/target/surefire-reports/TEST-*.xml'
-        archiveArtifacts 'complete/target/*.jar'
+        sh 'echo `pwd`;docker build -t gs-spring-boot/0.0.1-snapshot:v1 -f complete/Dockerfile complete'
     }
     //    stage('Results') {
     //    junit '**/target/surefire-reports/TEST-*.xml'
