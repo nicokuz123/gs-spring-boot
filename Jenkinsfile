@@ -18,15 +18,22 @@ node {
         }
        //  }
     }
-    stage('Results') {
+     stage('Results') {
         junit '**/target/surefire-reports/TEST-*.xml'
         archiveArtifacts 'complete/target/*.jar'
     }
-        stage('Build Dockerimage') {
-        sh 'echo `pwd`;docker build -t gs-spring-boot/0.0.1-snapshot:v1 -f complete/Dockerfile complete'
-    }
+
     //    stage('Results') {
     //    junit '**/target/surefire-reports/TEST-*.xml'
     //    archiveArtifacts 'complete/target/*.jar'
     //}
+}
+
+node {
+    /* Requires the Docker Pipeline plugin to be installed */
+    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+        stage('Build') {
+            sh 'mvn -B'
+        }
+    }
 }
