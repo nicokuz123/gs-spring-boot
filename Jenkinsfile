@@ -8,7 +8,8 @@ node {
         // **       in the global configuration.
         mvnHome = tool 'M3'
     }
-/*    stage('Build') {
+/*
+    stage('Build') {
         // Run the maven build
         withEnv(["MVN_HOME=$mvnHome"]) {
         //    if (isUnix()) {
@@ -18,11 +19,7 @@ node {
         }
        //  }
     }
-     stage('Results') {
-        junit '**/target/surefire-reports/TEST-*.xml'
-        archiveArtifacts 'complete/target/*.jar'
-    }
-
+ 
     //    stage('Results') {
     //    junit '**/target/surefire-reports/TEST-*.xml'
     //    archiveArtifacts 'complete/target/*.jar'
