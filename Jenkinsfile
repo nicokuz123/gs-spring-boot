@@ -50,6 +50,7 @@ pipeline {
                 echo 'checkout scm..'
                 checkout scm
             }
+        }    
         stage('Build') {
             steps {            
                 echo "pull mvm-image"
