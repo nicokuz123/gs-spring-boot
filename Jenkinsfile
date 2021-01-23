@@ -54,7 +54,7 @@ pipeline {
         stage('Build') {
             steps {            
                 echo "pull mvm-image"
-                sh '''docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine sh \"cd complete; mvn -B clean install\"'''
+                sh '''docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine sh -c \"cd complete; mvn -B clean install\"'''
             }                
         }
         stage('Test') {
