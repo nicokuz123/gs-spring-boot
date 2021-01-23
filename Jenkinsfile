@@ -79,7 +79,6 @@ pipeline {
                 sh 'cd complete && docker build -t ${ECR_URL}/${SVC_ID}:${IMG_TAG} .'
             }
         }
-        }
         stage('Test') {
             steps {
                 echo 'Testing..'
