@@ -49,7 +49,7 @@ pipeline {
                 checkout scm
                 //docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
                 echo "pull mvm-image"
-                sh ''sudo -E docker run --rm -v ${WORKSPACE}:/src -v ~/.m2:/root/.m2 maven:3-alpine' \
+                sh ''sudo -E docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine' \
                sh 'cd complete; mvn -B clean install''  
             }    
         }
