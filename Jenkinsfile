@@ -45,15 +45,16 @@ pipeline {
                                          'tdisp1-86064-core', 'tdisp1-8606401-anonym', 'tdisp1-xfcd-backend', 'evproxy', 'tqrs'], description: 'Service id')
     }
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
                 echo 'checkout scm..'
                 checkout scm
             }
-           // steps {            
-           //     echo "pull mvm-image"
-           //     sh '''sudo -E docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine' sh 'cd complete; mvn -B clean install'''
-           // }                
+        stage('Build') {
+            steps {            
+                echo "pull mvm-image"
+                sh '''sudo -E docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine' sh 'cd complete; mvn -B clean install'''
+            }                
         }
         stage('Test') {
             steps {
