@@ -13,7 +13,7 @@ String getSVCName(String SVC_ID) {
 pipeline {
     agent any
     environment {
-        ECR_URL = "052496584881.dkr.ecr.eu-central-1.amazonaws.com"
+        ECR_URL = "nicokuz/nicojenkins"
         AWS_PROFILE_NAME = "jenkins_shared"
         BASE_MVN_TAG = "0.2.0"
         AWS_ACC = "022535336011"
@@ -38,7 +38,7 @@ pipeline {
                                            'travelinfo',
                                            'weather',
                                            'parkinfo'], description: 'Service name')
-        choice(name: 'SVC_ID', choices: ['86008_mbbb_fpi', '86024_mbbb_poi', '86007_mbbb_news',
+        choice(name: 'SVC_ID', choices: ['spring-boot', '86008_mbbb_fpi', '86024_mbbb_poi', '86007_mbbb_news',
                                          '86009_mbbb_twit', '86014_mbbb_park', '86054_mbbb_efpi',
                                          '86006_mbbb_reise', '86010_mbbb_train', '86005_mbbb_wetter',
                                          '86012_mbbb_cityev', '86017_mbbb_countr', '86021_mbbb_flight',
@@ -56,6 +56,29 @@ pipeline {
                 echo "pull mvm-image"
                 sh '''docker run --rm -v ${WORKSPACE}:/src -v ~/.m2:/root/.m2 maven:3-alpine sh -c \"ls -la; cd /src/complete; mvn -B clean install\"'''
             }                
+        }
+        stage('Create Tag') {
+            steps {
+                echo 'creating the tag'
+                script {
+                    def imgTag
+                    if (env.GIT_TAG) {
+                        imgTag = params.GIT_TAG
+                    } else {
+                        imgTag = env.GIT_COMMIT.take(8)
+                    }
+                    env.IMG_TAG = imgTag
+                    println(imgTag)
+                }
+            }
+        }
+
+        stage('Dockerize App') {
+            steps {
+                echo 'dockerizing the app'
+                sh 'cd complete && docker build -t ${ECR_URL}/${SVC_ID}:${IMG_TAG} .'
+            }
+        }
         }
         stage('Test') {
             steps {
