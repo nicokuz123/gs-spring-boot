@@ -48,8 +48,7 @@ pipeline {
                 echo 'checkout scm..'
                 checkout scm
                 echo "pull mvm-image"
-                sh '''sudo -E docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine' \
-                sh 'cd complete; mvn -B clean install'''      
+                sh '''sudo -E docker run --rm -v ${WORKSPACE} -v ~/.m2:/root/.m2 maven:3-alpine' sh 'cd complete; mvn -B clean install'''      
         }
         stage('Test') {
             steps {
