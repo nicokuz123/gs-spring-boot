@@ -8,8 +8,8 @@
             sh 'cd complete; mvn -B clean install'
         }
     }
-}
-*/
+} */
+
 pipeline {
     agent any
 
