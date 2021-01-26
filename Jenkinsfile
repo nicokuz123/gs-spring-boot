@@ -102,7 +102,7 @@ pipeline {
                     git tag ${IMG_TAG}
                     git push --set-upstream origin HEAD:master --follow-tags 
                     '''
-//                }
+                }
             }
         }        
         stage('Test') {
