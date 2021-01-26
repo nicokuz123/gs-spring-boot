@@ -77,7 +77,7 @@ pipeline {
         stage('Dockerize App') {
             steps {
                 echo 'dockerizing the app'
-                sh 'cd complete && docker build -t ${DOCKER_REGISTRY}:${SVC_ID}/${IMG_TAG} .'
+                sh 'cd complete && docker build -t ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG} .'
             }
         }
         stage('Upload to privrepo') {
