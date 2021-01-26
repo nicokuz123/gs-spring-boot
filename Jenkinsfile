@@ -97,7 +97,7 @@ pipeline {
                 expression { params.GIT_TAG }
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'Username', passwordVariable: 'Password')]) {
                     sh '''
                     git tag ${IMG_TAG}
                     git push --set-upstream origin HEAD:master --follow-tags 
