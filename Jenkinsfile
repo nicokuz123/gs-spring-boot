@@ -7,20 +7,21 @@
 //         }
  //    }
 // } 
-String getSVCName(String SVC_ID) {
-    return SVC_ID.split("_")[2]
+//String getSVCName(String SVC_ID) {
+//    return SVC_ID.split("_")[2]
 }
 pipeline {
     agent any
     environment {
-        ECR_URL = "nicokuz/nicojenkins"
+        DOCKER_REGISTRY = "nicokuz/nicojenkins"
+        registryCredential = 'dockerhub'
         AWS_PROFILE_NAME = "jenkins_shared"
         BASE_MVN_TAG = "0.2.0"
         AWS_ACC = "022535336011"
         AWS_CLUSTER_NAME = "dev"
         AWS_REGION = "eu-central-1"
         KUBE_CONTEXT_FLAG = "--kube-context arn:aws:eks:${AWS_REGION}:${AWS_ACC}:cluster/${AWS_CLUSTER_NAME}"
-        SVC = getSVCName(SVC_ID)
+//        SVC = getSVCName(SVC_ID)
         MVNTestProperty = "com.vw.mbbb.e2etests.${SVC}.**"
     }
     parameters {
@@ -76,7 +77,15 @@ pipeline {
         stage('Dockerize App') {
             steps {
                 echo 'dockerizing the app'
-                sh 'cd complete && docker build -t ${ECR_URL}/${SVC_ID}:${IMG_TAG} .'
+                sh 'cd complete && docker build -t ${DOCKER_REGISTRY}:${SVC_ID}/${IMG_TAG} .'
+            }
+        }
+        stage('Upload to privrepo') {
+            steps {
+                echo 'uploading app to ECR'
+                sh '''docker login --username --password
+                sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}/${IMG_TAG}'''
+
             }
         }
         stage('Test') {
