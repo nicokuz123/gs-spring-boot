@@ -97,13 +97,13 @@ pipeline {
                 expression { params.GIT_TAG }
             }
             steps {
-//                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'Username', passwordVariable: 'Password')]) {
+                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                     echo env.GITURL
-//                    git tag ${IMG_TAG}
-//                    git push --set-upstream origin HEAD:master --follow-tags
+                    git tag ${IMG_TAG}
+                    git push --set-upstream origin HEAD:master --follow-tags https://${USERNAME}:${PASSWORD}@github.com/nicokuz123/gs-spring-boot.git
                     '''
-//                }
+                }
             }
         }        
         stage('Test') {
