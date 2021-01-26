@@ -85,7 +85,7 @@ pipeline {
                 echo 'uploading app to ECR'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh '''docker login --username $USERNAME --password $PASSWORD'''
-                sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}/${IMG_TAG}'''
+                sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG}'''
                 }
             }
         }
