@@ -9,7 +9,7 @@
 // } 
 //String getSVCName(String SVC_ID) {
 //    return SVC_ID.split("_")[2]
-}
+// }
 pipeline {
     agent any
     environment {
