@@ -95,11 +95,8 @@ pipeline {
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh '''
-                    git config --global user.email "jenkins"
-                    git config --global user.name "jenkins"
-                 //   git commit -m "Prepared release ${IMG_TAG}"
-                    git tag ${IMG_TAG} https://$USERNAME:$PASSWORD@github.com/nicokuz123/gs-spring-boot.git
+                    sh -X'''
+                    git tag ${IMG_TAG}
                     git push --set-upstream origin master--follow-tags https://$USERNAME:$PASSWORD@github.com/nicokuz123/gs-spring-boot.git
                     '''
                 }
