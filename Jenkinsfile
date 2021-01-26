@@ -101,7 +101,7 @@ pipeline {
                     sh '''
                     echo env.GITURL
                     git tag ${IMG_TAG}
-                    git push --set-upstream origin HEAD:master --follow-tags https://${USERNAME}:${PASSWORD}@github.com/nicokuz123/gs-spring-boot.git
+                    git push --set-upstream origin --follow-tags https://${USERNAME}:${PASSWORD}@github.com/nicokuz123/gs-spring-boot.git
                     '''
                 }
             }
