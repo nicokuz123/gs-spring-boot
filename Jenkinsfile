@@ -57,7 +57,8 @@ pipeline {
                 echo "pull mvm-image"
                 sh '''docker run --rm -v ${WORKSPACE}:/src -v ~/.m2:/root/.m2 maven:3-alpine sh -c \"ls -la; cd /src/complete; mvn -B clean install\"'''
             }                
-*/        }
+        }
+*/
         stage('Create Tag') {
             steps {
                 echo 'creating the tag'
@@ -79,7 +80,8 @@ pipeline {
                 echo 'dockerizing the app'
                 sh 'cd complete && docker build -t ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG} .'
             }
-*/        }
+        }
+*/
 /*        stage('Upload to privrepo') {
             steps {
                 echo 'uploading app to ECR'
@@ -88,7 +90,8 @@ pipeline {
                 sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG}'''
                 }
             }
-*/        }
+        }
+*/
         stage('Push Tag') {
             when {
                 expression { params.GIT_TAG }
