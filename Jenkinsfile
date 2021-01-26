@@ -52,12 +52,12 @@ pipeline {
                 checkout scm
             }
         }    
-        stage('Build') {
+/*        stage('Build') {
             steps {            
                 echo "pull mvm-image"
                 sh '''docker run --rm -v ${WORKSPACE}:/src -v ~/.m2:/root/.m2 maven:3-alpine sh -c \"ls -la; cd /src/complete; mvn -B clean install\"'''
             }                
-        }
+*/        }
         stage('Create Tag') {
             steps {
                 echo 'creating the tag'
@@ -74,13 +74,13 @@ pipeline {
             }
         }
 
-        stage('Dockerize App') {
+/*        stage('Dockerize App') {
             steps {
                 echo 'dockerizing the app'
                 sh 'cd complete && docker build -t ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG} .'
             }
-        }
-        stage('Upload to privrepo') {
+*/        }
+/*        stage('Upload to privrepo') {
             steps {
                 echo 'uploading app to ECR'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -88,14 +88,14 @@ pipeline {
                 sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}_${IMG_TAG}'''
                 }
             }
-        }
+*/        }
         stage('Push Tag') {
             when {
                 expression { params.GIT_TAG }
             }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh -x'''
+                    sh '''
                     git tag ${IMG_TAG}
                     git push --set-upstream origin master--follow-tags https://$USERNAME:$PASSWORD@github.com/nicokuz123/gs-spring-boot.git
                     '''
