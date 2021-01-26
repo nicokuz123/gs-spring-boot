@@ -83,9 +83,10 @@ pipeline {
         stage('Upload to privrepo') {
             steps {
                 echo 'uploading app to ECR'
-                sh '''docker login --username --password
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                sh '''docker login --username $USERNAME --password $PASSWORD'''
                 sh '''docker push ${DOCKER_REGISTRY}:${SVC_ID}/${IMG_TAG}'''
-
+                }
             }
         }
         stage('Test') {
