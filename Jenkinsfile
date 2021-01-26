@@ -99,7 +99,7 @@ pipeline {
                     git config --global user.email "jenkins"
                     git config --global user.name "jenkins"
                  //   git commit -m "Prepared release ${IMG_TAG}"
-                    git tag ${IMG_TAG}
+                    git tag ${IMG_TAG} https://$USERNAME:$PASSWORD@github.com/nicokuz123/gs-spring-boot.git
                     git push --set-upstream origin master--follow-tags https://$USERNAME:$PASSWORD@github.com/nicokuz123/gs-spring-boot.git
                     '''
                 }
