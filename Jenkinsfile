@@ -100,7 +100,7 @@ pipeline {
 //                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
                     git tag ${IMG_TAG}
-                    git push --set-upstream origin master --follow-tags 
+                    git push --set-upstream origin --follow-tags 
                     '''
 //                }
             }
