@@ -101,7 +101,8 @@ pipeline {
                     sh '''
                     echo env.GITURL
                     git tag ${IMG_TAG}
-                    git push --set-upstream origin master --follow-tags
+                    git checkout master
+                    git push --set-upstream origin --follow-tags
                     '''
                 }
             }
