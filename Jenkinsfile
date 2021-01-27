@@ -97,12 +97,17 @@ pipeline {
                 expression { params.GIT_TAG }
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh', keyFileVariable: 'KEY_FILE')]) {
                     sh '''
-                    echo env.GITURL
+                    eval `ssh-agent -s`
+                    ssh-add ${KEY_FILE}
+                    ssh-add -L
+                    git add -u
+                    git config --global user.email "jenkins"
+                    git config --global user.name "jenkins"
+                    git commit -m "Prepared release ${IMG_TAG}"
                     git tag ${IMG_TAG}
-                    git checkout master
-                    git push --set-upstream origin --follow-tags
+                    git push --set-upstream origin master --follow-tags
                     '''
                 }
             }
