@@ -101,7 +101,6 @@ pipeline {
                     sh '''
                     echo env.GITURL
                     git tag ${IMG_TAG}
-                    git remote add origin  https://${USERNAME}:${PASSWORD}@github.com/nicokuz123/gs-spring-boot.git
                     git push --set-upstream origin --follow-tags
                     '''
                 }
