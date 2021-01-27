@@ -99,6 +99,8 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh', keyFileVariable: 'KEY_FILE')]) {
                     sh '''
+                    eval `ssh-agent -s`
+                    ssh-add ${KEY_FILE}
                     git config --global user.email "jenkins"
                     git config --global user.name "jenkins"
                     git tag ${IMG_TAG}
